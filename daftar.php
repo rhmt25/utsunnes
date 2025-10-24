@@ -77,8 +77,6 @@
     </head>
     <body>
         <?php 
-            session_Start();
-
             if (isset($_POST['nama_depan']) && isset($_POST['nama_belakang']) && isset($_POST['umur']) && isset($_POST['asal_kota'])) {
 
                 $nama_depan = $_POST['nama_depan'];
@@ -106,21 +104,20 @@
                     </tr>
 
                     <?php 
-                    $no = 1;
-                        for ($i = 1; $i <= $umur; $i++): ?>
-                            <?php if ($i % 2 === 0 && $i !== 4 && $i !== 8): ?>
-                                <tr>
-                                    <td><?= $no++ ?></td>
-                                    <td><?= htmlspecialchars($nama_depan. " " . $nama_belakang) ?></td>
-                                    <td><?= htmlspecialchars($umur . " tahun") ?></td>
-                                    <td><?= htmlspecialchars($asal_kota) ?></td>
-                                </tr>
-                            <?php endif; ?>
-                        <?php endfor; ?>
+                    for ($i = 1; $i <= $umur; $i++): 
+                        if ($i % 2 === 0 && $i !== 4 && $i !== 8): ?>
+                            <tr>
+                                <td><?= $i ?></td>
+                                <td><?= htmlspecialchars($nama_depan. " " . $nama_belakang) ?></td>
+                                <td><?= htmlspecialchars($umur . " tahun") ?></td>
+                                <td><?= htmlspecialchars($asal_kota) ?></td>
+                            </tr>
+                        <?php endif; 
+                    endfor; ?>
                 </table>
                 
                 <div class="back-button">
-                    <a href="delete.php">Kembali ke Form Registrasi</a>
+                    <a href="index.html">Kembali ke Form Registrasi</a>
                 </div>
             <?php elseif(isset($_POST['submit']) && $umur < 10): ?>
                 <div style="text-align: center; color: #dc3545; padding: 20px;">
