@@ -76,23 +76,76 @@
         </style>
     </head>
     <body>
+        <?php 
+            session_Start();
+
+            if (isset($_POST['nama_depan']) && isset($_POST['nama_belakang']) && isset($_POST['umur']) && isset($_POST['asal_kota'])) {
+
+                $nama_depan = $_POST['nama_depan'];
+                $nama_belakang = $_POST['nama_belakang'];
+                $umur = $_POST['umur'];
+                $asal_kota = $_POST['asal_kota'];
+
+                $_SESSION['daftar'][] = [
+                    "nama_depan" => $nama_depan,
+                    "nama_belakang" => $nama_belakang,
+                    "umur" => $umur,
+                    "asal_kota" => $asal_kota,
+                ];
+            }
+
+        ?>
+
         <div class="container">
             <h1>Data Registrasi User</h1>
             
-            <?php if (isset($_POST['submit'])): ?>
+            <?php if (isset($_POST['submit']) && $umur >= 10): ?>
                 <div class="success-message">
                     Registrasi Berhasil!
                 </div>
+
+                <table>
+                    <tr>
+                        <th style=" width: 8%">No</th>
+                        <th style=" width: 30%">Nama Lengkap</th>
+                        <th style=" width: 30%">umur</th>
+                        <th style=" width: 32%">Asal Kota</th>
+                    </tr>
+
+                    <?php 
+                    $no = 1;
+                    foreach ($_SESSION['daftar'] as $data): ?>
+                        <?php for ($i = 1; $i <= $data['umur']; $i++): ?>
+                            <?php if ($i % 2 === 0 && $i !== 4 && $i !== 8): ?>
+                                <tr>
+                                    <td><?= $no++ ?></td>
+                                    <td><?= htmlspecialchars($data['nama_depan'] . " " . $data['nama_belakang']) ?></td>
+                                    <td><?= htmlspecialchars($data['umur'] . " tahun") ?></td>
+                                    <td><?= htmlspecialchars($data['asal_kota']) ?></td>
+                                </tr>
+                            <?php endif; ?>
+                        <?php endfor; ?>
+                    <?php endforeach; ?>
+                </table>
                 
                 <div class="back-button">
-                    <a href="index.html">Kembali ke Form Registrasi</a>
+                    <a href="delete.php">Kembali ke Form Registrasi</a>
                 </div>
+            <?php elseif(isset($_POST['submit']) && $umur < 10): ?>
+                <div style="text-align: center; color: #dc3545; padding: 20px;">
+                    <h3>Error!</h3>
+                    <p>Umur harus minimal 10 tahun!</p>
+                    <div class="back-button">
+                        <a href="delete.php">Kembali ke Form Registrasi</a>
+                    </div>
+                </div>
+            <?php endelseif; ?>
             <?php else: ?>
                 <div style="text-align: center; color: #dc3545; padding: 20px;">
                     <h3>Error: Data tidak ditemukan</h3>
                     <p>Silakan isi form registrasi terlebih dahulu.</p>
                     <div class="back-button">
-                        <a href="index.html">Kembali ke Form Registrasi</a>
+                        <a href="delete.php">Kembali ke Form Registrasi</a>
                     </div>
                 </div>
             <?php endif; ?>
