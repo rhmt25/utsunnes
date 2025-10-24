@@ -85,13 +85,6 @@
                 $nama_belakang = $_POST['nama_belakang'];
                 $umur = $_POST['umur'];
                 $asal_kota = $_POST['asal_kota'];
-
-                $_SESSION['daftar'][] = [
-                    "nama_depan" => $nama_depan,
-                    "nama_belakang" => $nama_belakang,
-                    "umur" => $umur,
-                    "asal_kota" => $asal_kota,
-                ];
             }
 
         ?>
@@ -108,24 +101,22 @@
                     <tr>
                         <th style=" width: 8%">No</th>
                         <th style=" width: 30%">Nama Lengkap</th>
-                        <th style=" width: 30%">umur</th>
+                        <th style=" width: 30%">Umur</th>
                         <th style=" width: 32%">Asal Kota</th>
                     </tr>
 
                     <?php 
                     $no = 1;
-                    foreach ($_SESSION['daftar'] as $data): ?>
-                        <?php for ($i = 1; $i <= $data['umur']; $i++): ?>
+                        for ($i = 1; $i <= $umur; $i++): ?>
                             <?php if ($i % 2 === 0 && $i !== 4 && $i !== 8): ?>
                                 <tr>
                                     <td><?= $no++ ?></td>
-                                    <td><?= htmlspecialchars($data['nama_depan'] . " " . $data['nama_belakang']) ?></td>
-                                    <td><?= htmlspecialchars($data['umur'] . " tahun") ?></td>
-                                    <td><?= htmlspecialchars($data['asal_kota']) ?></td>
+                                    <td><?= htmlspecialchars($nama_depan. " " . $nama_belakang) ?></td>
+                                    <td><?= htmlspecialchars($umur . " tahun") ?></td>
+                                    <td><?= htmlspecialchars($asal_kota) ?></td>
                                 </tr>
                             <?php endif; ?>
                         <?php endfor; ?>
-                    <?php endforeach; ?>
                 </table>
                 
                 <div class="back-button">
@@ -136,16 +127,15 @@
                     <h3>Error!</h3>
                     <p>Umur harus minimal 10 tahun!</p>
                     <div class="back-button">
-                        <a href="delete.php">Kembali ke Form Registrasi</a>
+                        <a href="index.html">Kembali ke Form Registrasi</a>
                     </div>
                 </div>
-            <?php endelseif; ?>
             <?php else: ?>
                 <div style="text-align: center; color: #dc3545; padding: 20px;">
                     <h3>Error: Data tidak ditemukan</h3>
                     <p>Silakan isi form registrasi terlebih dahulu.</p>
                     <div class="back-button">
-                        <a href="delete.php">Kembali ke Form Registrasi</a>
+                        <a href="index.html">Kembali ke Form Registrasi</a>
                     </div>
                 </div>
             <?php endif; ?>
